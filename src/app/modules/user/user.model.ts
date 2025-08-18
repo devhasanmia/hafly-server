@@ -25,7 +25,7 @@ const VerifiedSchema = new Schema(
   }
 );
 
-const UserSchema: Schema = new Schema(
+const UserSchema: Schema = new Schema<IUser>(
   {
     name: { type: String, required: true },
     dob: { type: Date, required: true },
