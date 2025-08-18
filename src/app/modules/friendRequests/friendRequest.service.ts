@@ -33,6 +33,98 @@ const sendFriendRequest = async (
   }
 };
 
+export const acceptFriendRequest = async (
+  authenticatedUser: IAuthUser,
+  requestId: string
+) => {
+  try {
+    // Find the request where receiver = current authenticated user
+    const request = await FriendRequest.findOne({
+      _id: requestId,
+      receiver: authenticatedUser.userId,
+      status: "pending",
+    });
+    if (!request) {
+      throw new AppError(StatusCode.Unauthorized, "Not found or unauthorized");
+    }
+    // Update request status
+    request.status = "accepted";
+    await request.save();
+    return request;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const declineFriendRequest = async (
+  authenticatedUser: IAuthUser,
+  requestId: string
+) => {
+  try {
+    const request = await FriendRequest.findOne({
+      _id: requestId,
+      receiver: authenticatedUser.userId,
+      status: "pending",
+    });
+
+    if (!request) {
+      throw new AppError(StatusCode.Unauthorized, "Not found or unauthorized");
+    }
+    request.status = "declined";
+    await request.save();
+    return request;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const cancelFriendRequest = async (
+  authenticatedUser: IAuthUser,
+  requestId: string
+) => {
+  try {
+    const request = await FriendRequest.findOne({
+      _id: requestId,
+      sender: authenticatedUser.userId,
+      status: "pending",
+    });
+
+    if (!request) {
+      throw new AppError(StatusCode.Unauthorized, "Not found or unauthorized");
+    }
+
+    request.status = "cancelled";
+    await request.save();
+
+    return request;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const getFriendRequests = async (authenticatedUser: IAuthUser) => {
+  try {
+    const requests = await FriendRequest.find({
+      $or: [
+        { receiver: authenticatedUser.userId },
+        { sender: authenticatedUser.userId },
+      ],
+    })
+      .populate("sender", "name email profile.profilePicture")
+      .populate("receiver", "name email profile.profilePicture")
+      .exec();
+    return requests;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const FriendRequestServices = {
-    sendFriendRequest
+  sendFriendRequest,
+  acceptFriendRequest,
+  declineFriendRequest,
+  cancelFriendRequest,
+  getFriendRequests
 };

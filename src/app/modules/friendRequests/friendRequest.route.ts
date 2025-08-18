@@ -12,15 +12,31 @@ router.post(
 );
 
 // accept a friend request
-// router.patch("/:id/accept", checkAuth("user"), FriendRequestController.acceptFriendRequest);
+router.patch(
+  "/:requestId/accept",
+  checkAuth("user"),
+  FriendRequestController.acceptFriendRequest
+);
 
 // decline a friend request
-// router.patch("/:id/decline", checkAuth("user"), FriendRequestController.declineFriendRequest);
+router.patch(
+  "/:requestId/decline",
+  checkAuth("user"),
+  FriendRequestController.declineFriendRequest
+);
 
 // cancel a friend request
-// router.patch("/:id/cancel", checkAuth("user"), FriendRequestController.cancelFriendRequest);
+router.patch(
+  "/:requestId/cancel",
+  checkAuth("user"),
+  FriendRequestController.cancelFriendRequest
+);
 
 // get all friend requests for logged-in user
-// router.get("/", checkAuth("user"), FriendRequestController.getFriendRequests);
+router.get(
+  "/",
+  checkAuth("user"),
+  FriendRequestController.getFriendRequests
+);
 
 export const FriendRequestRoutes = router;
