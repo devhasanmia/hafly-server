@@ -1,17 +1,16 @@
 import { Router } from "express"
-import { UserRoutes } from "../modules/user/user.route"
+import { AuthRoutes } from "../modules/auth/auth.route"
 
 export const router = Router()
 const apiRoutes = [
     {
         path: "/auth",
-        // route: AuthRoutes
-
+        route: AuthRoutes
     }
 ]
 
 apiRoutes.forEach((route) => {
-    // router.use(route.path, route.route)
+    router.use(route.path, route.route)
 })
 
 
