@@ -43,13 +43,16 @@ const UserSchema: Schema = new Schema(
     verified: { type: VerifiedSchema },
     role: { type: String, enum: ["user", "admin"], default: "user" },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    versionKey: false
+  }
 );
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const saltRounds = 10;
-  this.password = bcrypt.hash(this.password as string, saltRounds);
+  this.password = await bcrypt.hash(this.password as string, saltRounds);
   next();
 });
 

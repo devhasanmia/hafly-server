@@ -11,7 +11,7 @@ export const globalErrorHandler = async (err: any, req: Request, res: Response, 
     let errorSources: TErrorSources[] = []
     let statusCode = 500
     let message = "Something Went Wrong!!"
-
+console.log(err)
     //Duplicate error
     if (err.code === 11000) {
         const simplifiedError = handlerDuplicateError(err)
