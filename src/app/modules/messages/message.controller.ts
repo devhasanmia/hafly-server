@@ -4,8 +4,6 @@ import { IAuthUser } from "../../interfaces/auth.interface";
 import { MessageServices } from "./message.service";
 import { sendResponse } from "../../utils/sendResponse";
 import { IMessage } from "./message.interface";
-import { Types } from "mongoose";
-
 
 // POST /messages
 const createMessage = catchAsync(
@@ -26,9 +24,7 @@ const createMessage = catchAsync(
 const getMessages = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const authenticatedUser = req.user as IAuthUser;
   const { receiverId } = req.params;
-
   const data = await MessageServices.getMessages(authenticatedUser.userId, receiverId);
-
   sendResponse(res, {
     statusCode: 200,
     success: true,
