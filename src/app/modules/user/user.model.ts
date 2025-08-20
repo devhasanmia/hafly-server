@@ -3,7 +3,9 @@ import { IUser } from "./user.interface";
 import bcrypt from "bcrypt";
 const ProfileSchema = new Schema(
   {
-    profilePicture: { type: String },
+    profilePicture: { type: String,
+      default: "https://example.com/default-profile.png"
+    },
     coverPhoto: { type: String },
     bio: { type: String },
   },

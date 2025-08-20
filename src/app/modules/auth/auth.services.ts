@@ -48,9 +48,9 @@ const login = async (payload: Pick<IUser, "email" | "password">) => {
     }
     const token = generateToken(jwtPayload, config.jwt.secret, config.jwt.expires_in);
     const refreshToken = generateToken(jwtPayload, config.jwt.refresh_secret, config.jwt.refresh_expires_in);
-    const data = await User.findById(user._id).select("name email");
+    const data = await User.findById(user._id).select("name email role profile.bio profile.profilePicture profile.coverPhoto");
     return {
-        data,
+        user: data,
         token,
         refreshToken
     };
