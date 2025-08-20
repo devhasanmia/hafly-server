@@ -8,4 +8,4 @@ const router = express.Router();
 router.post("/", checkAuth("user"), MessageController.createMessage);
 router.get("/:receiverId", checkAuth("user"), MessageController.getMessages);
 
-export const MessageRoutes = router;
+export const messengerRoutes = router;

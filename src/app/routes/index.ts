@@ -2,7 +2,7 @@ import { Router } from "express"
 import { AuthRoutes } from "../modules/auth/auth.route"
 import { SuggestionsRoutes } from "../modules/suggestions/suggestion.route"
 import { FriendRequestRoutes } from "../modules/friendRequests/friendRequest.route"
-import { MessageRoutes } from "../modules/messages/message.route"
+import { messengerRoutes } from "../modules/messages/message.route"
 
 export const router = Router()
 const apiRoutes = [
@@ -19,8 +19,8 @@ const apiRoutes = [
         route: FriendRequestRoutes
     },
     {
-        path: "/messages",
-        route: MessageRoutes
+        path: "/messenger",
+        route: messengerRoutes
     }
 
 ]
