@@ -31,7 +31,6 @@ const register = async (payload: IUser) => {
 };
 
 const login = async (payload: Pick<IUser, "email" | "password">) => {
-<<<<<<< HEAD
     const { email, password } = payload;
     const user = await User.findOne({ email });
     if (!user) {
@@ -54,38 +53,6 @@ const login = async (payload: Pick<IUser, "email" | "password">) => {
         token,
         refreshToken
     };
-=======
-  const { email, password } = payload;
-  const user = await User.findOne({ email });
-  if (!user) {
-    throw new AppError(StatusCode.Unauthorized, "Invalid credentials");
-  }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new AppError(StatusCode.Unauthorized, "Invalid credentials");
-  }
-  const jwtPayload = {
-    userId: user._id,
-    role: user.role,
-    name: user.name,
-  };
-  const token = generateToken(
-    jwtPayload,
-    config.jwt.secret,
-    config.jwt.expires_in
-  );
-  const refreshToken = generateToken(
-    jwtPayload,
-    config.jwt.refresh_secret,
-    config.jwt.refresh_expires_in
-  );
-  const data = await User.findById(user._id).select("name email role _id");
-  return {
-    user: data,
-    token,
-    refreshToken,
-  };
->>>>>>> 9258177e15906309124816181279bdceac9d83a6
 };
 
 export const AuthServices = {
